@@ -25,3 +25,25 @@ print("I'm outside of any function")
 f()
 
 print("I'm outside of any function")
+
+# стек как список
+
+x = [1,2,3]
+x.append(4)
+x.append(5)
+print(x)
+
+top = x.pop()
+print(top)
+print(x)
+
+top = x.pop()
+print(top)
+print(x)
+
+# None пример
+
+x = print(10)
+print(x)
+print(type(x))
+print(x is not None)
