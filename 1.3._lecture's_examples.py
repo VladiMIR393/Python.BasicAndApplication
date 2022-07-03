@@ -47,3 +47,16 @@ x = print(10)
 print(x)
 print(type(x))
 print(x is not None)
+
+def s(a, *vs, b=10):
+   print(a)
+   print(b)
+   res = a + b
+   print(res)
+   for v in vs:
+       print(v)
+       res += v
+   print(res)
+   return res
+
+s(5,5,5,5,1)
