@@ -90,6 +90,7 @@ create bar foo
 add bar a
 get bar a
 get bar b
+
 Sample Output:
 
 global
@@ -98,17 +99,37 @@ bar
 foo
 
 """
-n = int(input())
-scopes = {'global': {'parent': None, 'variables': set()}}
-def add(str:namespace, str: var):
-    scopes.update()
+n = int(input())  # количество строк
+v = 'variables'
+p = 'parent'
 
 
-    for i in range(n):
-        cmd, namesp, arg = input().split()
-        if cmd = 'add':
-            add()
-        if cmd = 'create':
-            create()
-        if cmd = 'get':
-            get()
+scopes = {'global': {'parent': None, 'variables': []}}   # словарь в который будем вносить пространства. Уровень 0.
+def add(namespace, var):          # функция добавления переменной в пространство
+    global v
+    scopes[namespace][v] += [var]
+def create(namespace, vpar):      # функция создания другого постранства
+    global p
+    global v
+    scopes.update([[namespace,{p: vpar, v: []}]]) # scopes = {'global': {'parent': None, 'variables': []}, 'foo': {'parent': global, 'variables': []} } - пример
+def get(namespace, var):          # функция поиска переменной в пространстве имен
+    global v
+    global p
+    if var in scopes[namespace][v]:
+        return print(namespace)
+    elif scopes[namespace][p] != None:
+        pr = scopes[namespace][p]   # если в этом пространстве нет, то запоминаем имя родительского пространства
+        get(pr, var)                # через рекурсию ищем снова
+    else:
+        return print('None')        # если дошли до Уровня 0 и там тоже нет этой переменной, то говорим, что её None
+
+
+for i in range(n):
+    cmd, namesp, arg = input().split()    # считываем строчкку Операция/Пространство/Аргумент
+    if cmd == 'add':
+        add(namesp, arg)
+    if cmd == 'create':
+        create(namesp, arg)
+    if cmd == 'get':
+        get(namesp, arg)
+
